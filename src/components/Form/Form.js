@@ -31,8 +31,18 @@ const Form = ({ currentId, setCurrentId }) => {
         } else {
             dispatch(createPost(postData));
         }
+        handleClear();
     };
-    const handleClear = () => {};
+    const handleClear = () => {
+        setCurrentId(null);
+        setPostData({
+            author: '',
+            title: '',
+            message: '',
+            tags: '',
+            selectedFile: ''
+        });
+    };
     return (
         <Paper className={classes.paper}>
             <form
@@ -41,7 +51,9 @@ const Form = ({ currentId, setCurrentId }) => {
                 noValidate
                 onSubmit={handleSubmit}
             >
-                <Typography variant="h6">Create a Moment</Typography>
+                <Typography variant="h6">
+                    {currentId ? 'Refresh' : 'Create'} a Moment
+                </Typography>
                 <TextField
                     name="author"
                     value={postData.author}
