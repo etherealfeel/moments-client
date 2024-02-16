@@ -7,15 +7,13 @@ import { createPost, updatePost } from '../../actions/posts';
 import { useSelector } from 'react-redux';
 
 const Form = ({ currentId, setCurrentId }) => {
-    const post = useSelector((state) =>
-        currentId ? state.posts.find((p) => p._id === currentId) : null
-    );
+    const post = useSelector((state) => (currentId ? state.posts.posts.find((p) => p._id === currentId) : null));
     const [postData, setPostData] = useState({
         author: '',
         title: '',
         message: '',
         tags: '',
-        selectedFile: ''
+        selectedFile: '',
     });
     const classes = useStyles();
     const dispatch = useDispatch();
@@ -40,29 +38,20 @@ const Form = ({ currentId, setCurrentId }) => {
             title: '',
             message: '',
             tags: '',
-            selectedFile: ''
+            selectedFile: '',
         });
     };
     return (
         <Paper className={classes.paper}>
-            <form
-                className={`${classes.root} ${classes.form}`}
-                autoComplete="off"
-                noValidate
-                onSubmit={handleSubmit}
-            >
-                <Typography variant="h6">
-                    {currentId ? 'Refresh' : 'Create'} a Moment
-                </Typography>
+            <form className={`${classes.root} ${classes.form}`} autoComplete="off" noValidate onSubmit={handleSubmit}>
+                <Typography variant="h6">{currentId ? 'Refresh' : 'Create'} a Moment</Typography>
                 <TextField
                     name="author"
                     value={postData.author}
                     variant="outlined"
                     label="Author"
                     fullWidth
-                    onChange={(e) =>
-                        setPostData({ ...postData, author: e.target.value })
-                    }
+                    onChange={(e) => setPostData({ ...postData, author: e.target.value })}
                 />
                 <TextField
                     name="title"
@@ -70,9 +59,7 @@ const Form = ({ currentId, setCurrentId }) => {
                     variant="outlined"
                     label="Title"
                     fullWidth
-                    onChange={(e) =>
-                        setPostData({ ...postData, title: e.target.value })
-                    }
+                    onChange={(e) => setPostData({ ...postData, title: e.target.value })}
                 />
                 <TextField
                     name="message"
@@ -80,9 +67,7 @@ const Form = ({ currentId, setCurrentId }) => {
                     variant="outlined"
                     label="Message"
                     fullWidth
-                    onChange={(e) =>
-                        setPostData({ ...postData, message: e.target.value })
-                    }
+                    onChange={(e) => setPostData({ ...postData, message: e.target.value })}
                 />
                 <TextField
                     name="tags"
@@ -93,7 +78,7 @@ const Form = ({ currentId, setCurrentId }) => {
                     onChange={(e) =>
                         setPostData({
                             ...postData,
-                            tags: e.target.value.split(',')
+                            tags: e.target.value.split(','),
                         })
                     }
                 />
@@ -101,9 +86,7 @@ const Form = ({ currentId, setCurrentId }) => {
                     <FileBase64
                         type="file"
                         multiple={false}
-                        onDone={({ base64 }) =>
-                            setPostData({ ...postData, selectedFile: base64 })
-                        }
+                        onDone={({ base64 }) => setPostData({ ...postData, selectedFile: base64 })}
                     />
                 </div>
                 <Button
@@ -116,13 +99,7 @@ const Form = ({ currentId, setCurrentId }) => {
                 >
                     Submit
                 </Button>
-                <Button
-                    variant="outlined"
-                    color="secondary"
-                    size="small"
-                    fullWidth
-                    onClick={handleClear}
-                >
+                <Button variant="outlined" color="secondary" size="small" fullWidth onClick={handleClear}>
                     Clear
                 </Button>
             </form>
