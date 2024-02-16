@@ -1,17 +1,22 @@
-import { FETCH_ALL, UPDATE_POST, DELETE_POST, CREATE_POST, FETCH_FILTERED } from '../constants/actionTypes';
-export default (posts = [], action) => {
+import { FETCH_ALL, UPDATE_POST, DELETE_POST, CREATE_POST, FETCH_FILTERED, FETCH_POST } from '../constants/actionTypes';
+export default (state = { isLoading: false, posts: [] }, action) => {
     switch (action.type) {
+        case FETCH_POST:
+            return { ...state, post: action.payload };
         case FETCH_ALL:
-            return action.payload;
+            return { ...state, posts: action.payload };
         case FETCH_FILTERED:
-            return action.payload;
+            return { ...state, posts: action.payload };
         case CREATE_POST:
-            return [...posts, action.payload];
+            return { ...state, posts: [...state.posts, action.payload] };
         case UPDATE_POST:
-            return posts.map((post) => (post._id === action.payload._id ? action.payload : post));
+            return {
+                ...state,
+                posts: state.posts.map((post) => (post._id === action.payload._id ? action.payload : post)),
+            };
         case DELETE_POST:
-            return posts.filter((post) => post._id !== action.payload);
+            return { ...state, posts: state.posts.filter((post) => post._id !== action.payload) };
         default:
-            return posts;
+            return state;
     }
 };

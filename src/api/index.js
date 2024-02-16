@@ -1,6 +1,7 @@
 import axios from 'axios';
 const url = 'http://localhost:4000/posts';
 
+export const fetchPost = (id) => axios.get(`${url}/${id}`);
 export const fetchPosts = () => axios.get(url);
 export const fetchFilteredPosts = (searchQuery) =>
     axios.get(`${url}/search?searchQuery=${searchQuery.searchTerm || 'none'}&tags=${searchQuery.tags}`);
