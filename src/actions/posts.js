@@ -4,7 +4,7 @@ import * as api from '../api';
 export const getPost = (id) => async (dispatch) => {
     try {
         const { data } = await api.fetchPost(id);
-        dispatch({ type: FETCH_POST, payload: data });
+        dispatch({ type: FETCH_POST, payload: { post: data } });
     } catch (error) {
         console.log(error);
     }

@@ -2,7 +2,7 @@ import { FETCH_ALL, UPDATE_POST, DELETE_POST, CREATE_POST, FETCH_FILTERED, FETCH
 export default (state = { isLoading: false, posts: [] }, action) => {
     switch (action.type) {
         case FETCH_POST:
-            return { ...state, post: action.payload };
+            return { ...state, post: action.payload.post };
         case FETCH_ALL:
             return { ...state, posts: action.payload };
         case FETCH_FILTERED:

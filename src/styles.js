@@ -1,9 +1,9 @@
-import { makeStyles } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core';
 
 export default makeStyles((theme) => ({
     container: {
-        padding: '30px 20px',
+        padding: '40px',
         backgroundColor: 'rgba(0,0,0,.5)',
-        height: '100vh',
+        minHeight: '100vh',
     },
-}))
+}));
