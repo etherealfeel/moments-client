@@ -7,6 +7,12 @@ export default makeStyles((theme) => ({
         display: 'flex',
         padding: '16px',
     },
+    searchField: {
+        marginBottom: '10px',
+    },
+    searchInput: {
+        marginBottom: '15px',
+    },
     pagination: {
         borderRadius: 4,
         marginTop: '1rem',

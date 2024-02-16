@@ -1,16 +1,24 @@
-import {
-    FETCH_ALL,
-    UPDATE_POST,
-    DELETE_POST,
-    CREATE_POST
-} from '../constants/actionTypes';
+import { FETCH_ALL, FETCH_FILTERED, UPDATE_POST, DELETE_POST, CREATE_POST } from '../constants/actionTypes';
 import * as api from '../api';
+
 export const getPosts = () => async (dispatch) => {
     try {
         const { data } = await api.fetchPosts();
         dispatch({ type: FETCH_ALL, payload: data });
     } catch (err) {
         console.log(err);
+    }
+};
+
+export const getFilteredPosts = (searchQuery) => async (dispatch) => {
+    try {
+        const {
+            data: { data },
+        } = await api.fetchFilteredPosts(searchQuery);
+        console.log(data);
+        dispatch({ type: FETCH_FILTERED, payload: data });
+    } catch (error) {
+        console.log(error);
     }
 };
 
