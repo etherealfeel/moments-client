@@ -4,9 +4,14 @@ export default (state = { isLoading: false, posts: [] }, action) => {
         case FETCH_POST:
             return { ...state, post: action.payload.post };
         case FETCH_ALL:
-            return { ...state, posts: action.payload };
+            return {
+                ...state,
+                posts: action.payload.data,
+                currentPage: action.payload.currentPage,
+                numberOfPages: action.payload.numberOfPages,
+            };
         case FETCH_FILTERED:
-            return { ...state, posts: action.payload };
+            return { ...state, posts: action.payload.data };
         case CREATE_POST:
             return { ...state, posts: [...state.posts, action.payload] };
         case UPDATE_POST:

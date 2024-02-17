@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Container, Grow, Grid, Paper, AppBar, TextField, Button } from '@material-ui/core';
+import { Container, Grow, Grid, Paper, AppBar, TextField, Button, Divider } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { getPosts, getFilteredPosts } from '../../actions/posts';
 import useStyles from './styles';
@@ -14,30 +14,34 @@ function useQuery() {
 }
 
 const Home = () => {
-    const [currentId, setCurrentId] = useState(null);
-    const classes = useStyles();
-    const dispatch = useDispatch();
-    const query = useQuery();
-    const navigate = useNavigate();
-    const page = query.get('page') || 1;
-    const searchQuery = query.get('searchQuery');
+    const [currentId, setCurrentId] = useState(0);
     const [searchTerm, setSearchTerm] = useState('');
     const [tags, setTags] = useState([]);
 
-    useEffect(() => {
-        dispatch(getPosts());
-    }, [dispatch]);
+    const classes = useStyles();
+
+    const query = useQuery();
+    const searchQuery = query.get('searchQuery');
+    const page = query.get('page') || 1;
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const searchPost = () => {
-        if (searchTerm === '') {
-            dispatch(getPosts());
+        console.log('searching for a post');
+        if (searchTerm === '' && !tags.length) {
+            dispatch(getPosts(page));
         } else if (searchTerm.trim() || tags) {
             dispatch(getFilteredPosts({ searchTerm, tags: tags.join(',') }));
-            navigate(`/posts/search?searchQuery=${searchTerm || 'none'}&tags=${tags.join(',')}`);
+            navigate(`/search?searchQuery=${searchTerm || 'none'}&tags=${tags.join(',')}`);
         } else {
             navigate('/');
         }
     };
+
+    useEffect(() => {
+        searchPost();
+    }, [dispatch, searchTerm]);
 
     const handleKeyDown = (e) => {
         if (e.keyCode === 13) {
@@ -71,18 +75,19 @@ const Home = () => {
                                 className={classes.searchField}
                                 name="search"
                                 variant="outlined"
-                                label="Search for a moment"
+                                label="Type to search moments..."
                                 value={searchTerm}
                                 onKeyDown={handleKeyDown}
                                 onChange={(e) => setSearchTerm(e.target.value)}
                                 fullWidth
                             />
+                            <Divider style={{ margin: '20px 0' }} />
                             <ChipInput
                                 className={classes.searchInput}
                                 value={tags}
                                 onAdd={(chip) => handleAdd(chip)}
                                 onDelete={(chip) => handleDelete(chip)}
-                                label="Search Tags"
+                                label="Add tags..."
                                 variant="outlined"
                             />
                             <Button
@@ -91,13 +96,15 @@ const Home = () => {
                                 color="primary"
                                 variant="outlined"
                             >
-                                Search
+                                Search by tags
                             </Button>
                         </AppBar>
                         <Form currentId={currentId} setCurrentId={setCurrentId} />
-                        <Paper elevation={6}>
-                            <Pagination />
-                        </Paper>
+                        {!searchQuery && !tags.length && (
+                            <Paper elevation={6} className={classes.pagination}>
+                                <Pagination page={page} />
+                            </Paper>
+                        )}
                     </Grid>
                 </Grid>
             </Container>

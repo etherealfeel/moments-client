@@ -7,9 +7,6 @@ export default makeStyles((theme) => ({
         display: 'flex',
         padding: '16px',
     },
-    searchField: {
-        marginBottom: '10px',
-    },
     searchInput: {
         marginBottom: '15px',
     },

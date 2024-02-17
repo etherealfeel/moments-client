@@ -26,7 +26,7 @@ const Form = ({ currentId, setCurrentId }) => {
         e.preventDefault();
         if (currentId) {
             dispatch(updatePost(currentId, postData));
-        } else {
+        } else if (postData.author && postData.title) {
             dispatch(createPost(postData));
         }
         handleClear();
@@ -46,6 +46,7 @@ const Form = ({ currentId, setCurrentId }) => {
             <form className={`${classes.root} ${classes.form}`} autoComplete="off" noValidate onSubmit={handleSubmit}>
                 <Typography variant="h6">{currentId ? 'Refresh' : 'Create'} a Moment</Typography>
                 <TextField
+                    required
                     name="author"
                     value={postData.author}
                     variant="outlined"
@@ -54,6 +55,7 @@ const Form = ({ currentId, setCurrentId }) => {
                     onChange={(e) => setPostData({ ...postData, author: e.target.value })}
                 />
                 <TextField
+                    required
                     name="title"
                     value={postData.title}
                     variant="outlined"

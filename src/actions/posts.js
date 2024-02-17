@@ -10,22 +10,25 @@ export const getPost = (id) => async (dispatch) => {
     }
 };
 
-export const getPosts = () => async (dispatch) => {
+export const getPosts = (page) => async (dispatch) => {
     try {
-        const { data } = await api.fetchPosts();
-        dispatch({ type: FETCH_ALL, payload: data });
+        const {
+            data: { data, currentPage, numberOfPages },
+        } = await api.fetchPosts(page);
+
+        dispatch({ type: FETCH_ALL, payload: { data, currentPage, numberOfPages } });
     } catch (err) {
         console.log(err);
     }
 };
 
 export const getFilteredPosts = (searchQuery) => async (dispatch) => {
+    console.log('getFilteredPosts', searchQuery);
     try {
         const {
             data: { data },
         } = await api.fetchFilteredPosts(searchQuery);
-        console.log(data);
-        dispatch({ type: FETCH_FILTERED, payload: data });
+        dispatch({ type: FETCH_FILTERED, payload: { data } });
     } catch (error) {
         console.log(error);
     }
