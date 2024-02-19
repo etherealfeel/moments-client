@@ -9,7 +9,7 @@ export default makeStyles((theme) => ({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        padding: '10px 50px',
+        padding: '20px 40px',
         [theme.breakpoints.down('sm')]: {
             flexDirection: 'column',
         },
