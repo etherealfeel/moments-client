@@ -28,7 +28,6 @@ const Home = () => {
     const navigate = useNavigate();
 
     const searchPost = () => {
-        console.log('searching for a post');
         if (searchTerm === '' && !tags.length) {
             dispatch(getPosts(page));
         } else if (searchTerm.trim() || tags) {
